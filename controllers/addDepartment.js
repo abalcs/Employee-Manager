@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const connection = require('..config/db.js');
+const connection = require('../config/db');
 
 const addDept = (add) => {
     inquirer.prompt([

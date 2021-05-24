@@ -15,15 +15,15 @@ INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES ('Kevi
 -- Roles Starter Table
 
 INSERT INTO roles (title, salary, department_id) VALUES ('Regional Manager', 80000, 1);
-INSERT INTO roles (title, salary, department_id) VALUES ('Assistant TO Regional Manager', 50000, 2);
-INSERT INTO roles (title, salary, department_id) VALUES ('Assistant Regional Manager', 60000, 3);
-INSERT INTO roles (title, salary, department_id) VALUES ('Human Resources', 70000, 4);
-INSERT INTO roles (title, salary, department_id) VALUES ('Reception', 40000, 5);
-INSERT INTO roles (title, salary, department_id) VALUES ('Warehouse Foreman', 65000, 6);
-INSERT INTO roles (title, salary, department_id) VALUES ('Regional Sales Director', 70000, 7);
-INSERT INTO roles (title, salary, department_id) VALUES ('Senior Accountant', 65000, 8);
-INSERT INTO roles (title, salary, department_id) VALUES ('Customer Service', 50000, 9);
-INSERT INTO roles (title, salary, department_id) VALUES ('Accountant', 55000, 10);
+INSERT INTO roles (title, salary, department_id) VALUES ('Assistant TO Regional Manager', 50000, 1);
+INSERT INTO roles (title, salary, department_id) VALUES ('Assistant Regional Manager', 60000, 1);
+INSERT INTO roles (title, salary, department_id) VALUES ('Human Resources', 70000, 3);
+INSERT INTO roles (title, salary, department_id) VALUES ('Reception', 40000, 2);
+INSERT INTO roles (title, salary, department_id) VALUES ('Warehouse Foreman', 65000, 5);
+INSERT INTO roles (title, salary, department_id) VALUES ('Regional Sales Director', 70000, 2);
+INSERT INTO roles (title, salary, department_id) VALUES ('Senior Accountant', 65000, 4);
+INSERT INTO roles (title, salary, department_id) VALUES ('Customer Service', 50000, 2);
+INSERT INTO roles (title, salary, department_id) VALUES ('Accountant', 55000, 4);
 
 -- Department Starter Table
 
