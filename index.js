@@ -1,104 +1,63 @@
-let inquirer = require('inquirer');
-let mysql = require('mysql');
-let table = require('console.table');
+const inquirer = require('inquirer');
+const questTask= require('./controllers/taskQuestion');
 
-let connection = mysql.createConnection({
-    host: 'localhost',
-    port: 8060,
-    user: 'root',
-    password: 'Eleanor2018!',
-    database: 'employeeMgr',
-})
+const addEmployee = require('./controllers/addEmployees.js');
+const addRole = require('./controllers/addRoles.js');
+const addDept = require('./controllers/addDepartment.js');
+const updateEmployee = require('./controllers/updateEmployee');
+const viewByMng = require('./controllers/viewByMng')
+const toDeleteEmployee = require('./controllers/deleteEmployee');
+const toDeleteRole = require('./controllers/deleteRole');
+const toDeleteDept = require('./controllers/deleteDepartment');
 
-function promptUser() {
-    return inquirer.prompt([
-        {
-            type: 'list',
-            message: 'What would you like to do?',
-            choices: [
-                'View all Employees',
-                'View Employees by Department',
-                'View Employees by Manager',
-                'Add Employee',
-                'Remove Employee',
-                'Update Employee Role',
-                'Update Employee Manager',
-                'View all Roles'
-            ],
-            pageSize: 8,
-            name: 'menu',
-        }
-    ])
-    .then(userChoice => {
-        switch(userChoice.menu) {
-            case 'View all Employees':
-                viewAllEmp();
-                break;
-            case 'View Employees by Department':
-                viewEmpByDept();
-                break;
-            case 'View Employees by Manager':
-                viewEmpByMgr();
-                break;
-            case 'Add Employee':
-                addEmployee();
-                break;
-            case 'Remove Employee':
-                removeEmployee();
-                break;
-            case 'Update Employee Role':
-                updateEmpRole();
-                break;
-            case 'Update Employee Manager':
-                updateEmpMgr();
-                break;
-            case 'View all Roles':
-                viewAllRoles();
-                break;
-        }
-    })
-}
+const dal = require('./controllers/dal');
+const queries = require('./db/queries.js');
 
-function viewAllEmp() {
-    console.table()
-}
 
-function addEmployee() {
-    return inquirer.prompt([
-        {
-            type: 'input',
-            message: 'What is the name of the new employee?',
-            name: 'name',
-        },
-        {
-            type: 'input',
-            message: 'Who is their Manager?',
-            name: 'manager',
-        },
-        {
-            type: 'input',
-            message: 'Which department do they work in?',
-            name: 'department'
-        }
-    ])
-    .then(addEmp => {
-        const { name, manager, department } = addEmp;
-        const query = connection.query('INSERT INTO employeeMgr SET ?',
-        {
-            employee: `${name}`,
-            manager: `${manager}`,
-            department: `${department}`
-        }, (err) => {
-            if (err) throw err;
-        }) 
-        // connection.end();
-    })
-}
+const askTask = () => {
+    inquirer
+        .prompt(questTask)
+        .then((answers) => {
+            const task = answers.task;
+            if (task === 'view all employees') {
+                dal.viewAll(queries.allEmployees).then((res) => askTask());
+            } else if (task === 'view employees by manager') {
+                viewByMng()
+                .then((answers) => dal.viewAllBy(queries.allEmployeesByMng, 'm.id', answers.managerId))
+                .then(() => askTask());
+            }else if (task === 'view all roles') {
+                dal.viewAll(queries.allRoles)
+                .then(() => askTask());
+            } else if (task === 'view all departments') {
+                dal.viewAll(queries.allDepts)
+                .then(() => askTask());
+            } else if (task === 'add employee') {
+                addEmployee(askTask);
+            } else if (task === 'add role') {
+                addRole(askTask);
+            } else if (task === 'add department') {
+                addDept(askTask);
+            } else if (task === 'update employee') {
+                updateEmployee();
+            } else if (task === 'delete employee') {
+                toDeleteEmployee()
+                .then((answers) => dal.deleteFrom(queries.deleteId, 'employees', Number(answers.empToDelete)))
+                .then(() => askTask());
+            } else if (task === 'delete role') {
+                toDeleteRole()
+                .then((answers) => dal.deleteFrom(queries.deleteId, 'roles', Number(answers.roleToDelete)))
+                .then(() => askTask());
+            } else if (task === 'delete department') {
+                toDeleteDept()
+                .then((answers) => dal.deleteFrom(queries.deleteId, 'departments', Number(answers.deptToDelete)))
+                .then(() => askTask());
+            } else {
+                process.exit();
+            }
+        })
+        .catch((err) => console.log(err));
+};
 
-promptUser();
+askTask();
 
-// connection.connect((err) => {
-    
-//     if (err) throw err;
-//     console.log('connected as id ${connection.threadId}\n');
-// });
+module.exports = askTask;
