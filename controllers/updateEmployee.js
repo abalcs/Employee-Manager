@@ -1,6 +1,5 @@
 const inquirer = require('inquirer');
 const connection = require('../config/db');
-const { getAllRoles, getAllManagers } = require('./getAll');
 
 const { getAllEmp, getAllRoles, getAllManagers } = require('./getAll');
 
