@@ -23,6 +23,6 @@ CREATE TABLE roles (
 
 CREATE TABLE departments (
     id INTEGER NOT NULL AUTO_INCREMENT,
-    dept_name VARCHAR(30)
+    dept_name VARCHAR(30),
     PRIMARY KEY (id)
 );

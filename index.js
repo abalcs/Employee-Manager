@@ -1,9 +1,9 @@
 const inquirer = require('inquirer');
 const questTask= require('./controllers/taskQuestion');
 
-const addEmployee = require('./controllers/addEmployees.js');
-const addRole = require('./controllers/addRoles.js');
-const addDept = require('./controllers/addDepartment.js');
+const addEmployee = require('./controllers/addEmployees');
+const addRole = require('./controllers/addRoles');
+const addDept = require('./controllers/addDepartment');
 const updateEmployee = require('./controllers/updateEmployee');
 const viewByMng = require('./controllers/viewByMng')
 const toDeleteEmployee = require('./controllers/deleteEmployee');
@@ -11,43 +11,46 @@ const toDeleteRole = require('./controllers/deleteRole');
 const toDeleteDept = require('./controllers/deleteDepartment');
 
 const dal = require('./controllers/dal');
-const queries = require('./db/queries.js');
-
+const queries = require('./db/queries');
 
 const askTask = () => {
     inquirer
         .prompt(questTask)
         .then((answers) => {
             const task = answers.task;
-            if (task === 'view all employees') {
+            if (task === 'View all employees') {
                 dal.viewAll(queries.allEmployees).then((res) => askTask());
-            } else if (task === 'view employees by manager') {
+            } else if (task === 'View employees by manager') {
                 viewByMng()
                 .then((answers) => dal.viewAllBy(queries.allEmployeesByMng, 'm.id', answers.managerId))
                 .then(() => askTask());
-            }else if (task === 'view all roles') {
+            } else if (task === 'View all roles') {
                 dal.viewAll(queries.allRoles)
                 .then(() => askTask());
-            } else if (task === 'view all departments') {
+            } else if (task === 'View all departments') {
                 dal.viewAll(queries.allDepts)
                 .then(() => askTask());
-            } else if (task === 'add employee') {
-                addEmployee(askTask);
-            } else if (task === 'add role') {
-                addRole(askTask);
-            } else if (task === 'add department') {
+            } else if (task === 'Add employee') {
+                addEmployee(askTask)
+               
+            } else if (task === 'Add role') {
+                addRole().then(() => askTask());
+            
+            } else if (task === 'Add department') {
                 addDept(askTask);
-            } else if (task === 'update employee') {
-                updateEmployee();
-            } else if (task === 'delete employee') {
+                
+            } else if (task === 'Update employee') {
+                updateEmployee()
+                
+            } else if (task === 'Delete employee') {
                 toDeleteEmployee()
                 .then((answers) => dal.deleteFrom(queries.deleteId, 'employees', Number(answers.empToDelete)))
                 .then(() => askTask());
-            } else if (task === 'delete role') {
+            } else if (task === 'Delete role') {
                 toDeleteRole()
                 .then((answers) => dal.deleteFrom(queries.deleteId, 'roles', Number(answers.roleToDelete)))
                 .then(() => askTask());
-            } else if (task === 'delete department') {
+            } else if (task === 'Delete department') {
                 toDeleteDept()
                 .then((answers) => dal.deleteFrom(queries.deleteId, 'departments', Number(answers.deptToDelete)))
                 .then(() => askTask());
@@ -61,3 +64,20 @@ const askTask = () => {
 askTask();
 
 module.exports = askTask;
+
+
+//Cannot make it past the initial question
+
+// ## Minimum Requirements
+
+// * Functional application.
+
+// * GitHub repository with a unique name and a README describing the project.
+
+// * The command-line application should allow users to:
+
+//   * Add departments, roles, employees
+
+//   * View departments, roles, employees
+
+//   * Update employee roles

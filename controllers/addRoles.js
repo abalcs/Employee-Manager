@@ -4,7 +4,7 @@ const connection = require('../config/db');
 const { allDepts } = require('../db/queries');
 const { getAllDepts } = require('./getAll');
 
-const addRole = (askTask) => {
+const addRole = () => {
     Promise.all([ getAllDepts() ])
     .then((values) => {
         return values[0];
@@ -39,7 +39,6 @@ const addRole = (askTask) => {
             function(err) {
                 if (err) throw err;
                 console.log('The role was added successfullly!');
-                askTask();
             }
         );
     }).catch((err) => console.log(err));

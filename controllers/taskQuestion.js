@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 
 const questTask = [
     {
-        type: 'rawList',
+        type: 'list',
         name: 'task',
         message: 'What would you like to do today?',
         choices: [
@@ -22,9 +22,9 @@ const questTask = [
             'Delete role',
             'Delete department',
             new inquirer.Separator('=== EXIT ==='),
-            'Exit Application'
+            'Exit Application',
         ],
-        pageSize: 13
+        pageSize: 17
     }
 ];
 

@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const connection = require('../config/db');
 
-const addDept = (add) => {
+const addDept = (askTask) => {
     inquirer.prompt([
         {
             type: 'input',
@@ -10,15 +10,17 @@ const addDept = (add) => {
         }
     ])
     .then( (answers) => {
+        console.log(answers)
         connection.query
             'INSERT INTO departments SET ?',
             {
-                dept_name: answers.dept_name,
+                dept_name: answers.deptName,
             },
             function(err) {
+                console.log(err)
                 if (err) throw err;
                 console.log('Successfully added new department');
-                addDept();
+                askTask();
             }
     })
 }
