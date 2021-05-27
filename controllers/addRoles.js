@@ -1,4 +1,5 @@
 const inquirer = require('inquirer');
+const askTask = require('../index');
 
 const connection = require('../config/db');
 const { allDepts } = require('../db/queries');
@@ -38,10 +39,11 @@ const addRole = () => {
             },
             function(err) {
                 if (err) throw err;
-                console.log('The role was added successfullly!');
+                console.log('The role was added successfully!');
+                askTask();
             }
         );
-    }).catch((err) => console.log(err));
-}
+    })
+};
 
 module.exports = addRole;
