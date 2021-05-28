@@ -40,7 +40,7 @@ const askTask = () => {
                 addDept(askTask);
                 
             } else if (task === 'Update employee') {
-                updateEmployee()
+                updateEmployee().then(() => askTask())
                 
             } else if (task === 'Delete employee') {
                 toDeleteEmployee()
