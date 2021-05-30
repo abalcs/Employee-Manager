@@ -13,6 +13,8 @@ const toDeleteDept = require('./controllers/deleteDepartment');
 const dal = require('./controllers/dal');
 const queries = require('./db/queries');
 
+const colors = require('colors');
+
 const askTask = () => {
     inquirer
         .prompt(questTask)
@@ -64,20 +66,3 @@ const askTask = () => {
 askTask();
 
 module.exports = askTask;
-
-
-//Cannot make it past the initial question
-
-// ## Minimum Requirements
-
-// * Functional application.
-
-// * GitHub repository with a unique name and a README describing the project.
-
-// * The command-line application should allow users to:
-
-//   * Add departments, roles, employees
-
-//   * View departments, roles, employees
-
-//   * Update employee roles
