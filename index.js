@@ -13,8 +13,6 @@ const toDeleteDept = require('./controllers/deleteDepartment');
 const dal = require('./controllers/dal');
 const queries = require('./db/queries');
 
-const colors = require('colors');
-
 const askTask = () => {
     inquirer
         .prompt(questTask)
