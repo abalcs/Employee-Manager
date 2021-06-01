@@ -11,8 +11,6 @@
 - [License](#license)
 - [Questions](#questions)
 
-![Application Image] (img/image1.png)
-
 ![Application Image](img/image1.png)
 
 ![Application Image](img/image2.png)
